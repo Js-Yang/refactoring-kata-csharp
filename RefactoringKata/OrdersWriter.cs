@@ -17,30 +17,29 @@ namespace RefactoringKata
         {
             var sb = new StringBuilder("{\"orders\": [");
 
-            printOrder(sb);
+            sb.Append(PrintOrder());
 
             return sb.Append("]}").ToString();
         }
 
-        private void printOrder(StringBuilder sb)
+        private string PrintOrder()
         {
+            var orderDetail = string.Empty;
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
-                sb.Append("{");
-                sb.Append("\"id\": ");
-                sb.Append(order.GetOrderId());
-                sb.Append(", ");
-                sb.Append("\"products\": [");
-                sb.Append(PrintProducts(order));
-                sb.Append("]");
-                sb.Append("}, ");
+                orderDetail += "{\"id\": ";
+                orderDetail += order.GetOrderId();
+                orderDetail += ", \"products\": [";
+                orderDetail += PrintProducts(order);
+                orderDetail += "]}, ";
             }
 
             if (_orders.GetOrdersCount() > 0)
             {
-                sb.Remove(sb.Length - 2, 2);
+                orderDetail = orderDetail.Substring(0, orderDetail.Length - 2);
             }
+            return orderDetail;
         }
 
         private string PrintProducts(Order order)
