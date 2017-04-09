@@ -25,9 +25,7 @@ namespace RefactoringKata
                 sb.Append(order.GetOrderId());
                 sb.Append(", ");
                 sb.Append("\"products\": [");
-
                 PrintProducts(order, sb);
-
                 sb.Append("]");
                 sb.Append("}, ");
             }
@@ -58,16 +56,8 @@ namespace RefactoringKata
                     productSpecifications.Remove("size");
                 }
 
-                var lastKey = productSpecifications.Last().Key;
                 sb.Append("{");
-                foreach (var productSpecification in productSpecifications)
-                {
-                    sb.Append(string.Format("\"{0}\": {1}", productSpecification.Key, PrintSpecificationValue(productSpecification.Value)));
-                    if (productSpecification.Key != lastKey)
-                    {
-                        sb.Append(", ");
-                    }
-                }
+                sb.Append(PrintEachProductSpecification(productSpecifications));
                 sb.Append("}, ");
                 if (order.GetProductsCount() > 0)
                 {
@@ -76,9 +66,25 @@ namespace RefactoringKata
             }
         }
 
+        private string PrintEachProductSpecification(Dictionary<string, object> productSpecifications)
+        {
+            var specifications = string.Empty;
+            var lastKey = productSpecifications.Last().Key;
+            foreach (var productSpecification in productSpecifications)
+            {
+                specifications += string.Format("\"{0}\": {1}", productSpecification.Key,
+                    PrintSpecificationValue(productSpecification.Value));
+                if (productSpecification.Key != lastKey)
+                {
+                    specifications += ", ";
+                }
+            }
+            return specifications;
+        }
+
         private string PrintSpecificationValue(object specificationValue)
         {
-            string value = specificationValue.ToString();
+            var value = specificationValue.ToString();
             if (!IsNumber(specificationValue))
                 value = "\"" + value + "\"";
             return value;
