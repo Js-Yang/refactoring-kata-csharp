@@ -24,36 +24,7 @@ namespace RefactoringKata
                 sb.Append(", ");
                 sb.Append("\"products\": [");
 
-                for (var j = 0; j < order.GetProductsCount(); j++)
-                {
-                    var product = order.GetProduct(j);
-                    sb.Append("{");
-                    sb.Append("\"code\": \"");
-                    sb.Append(product.Code);
-                    sb.Append("\", ");
-                    sb.Append("\"color\": \"");
-                    sb.Append(getColorFor(product));
-                    sb.Append("\", ");
-
-                    if (product.Size != Product.SIZE_NOT_APPLICABLE)
-                    {
-                        sb.Append("\"size\": \"");
-                        sb.Append(getSizeFor(product));
-                        sb.Append("\", ");
-                    }
-
-                    sb.Append("\"price\": ");
-                    sb.Append(product.Price);
-                    sb.Append(", ");
-                    sb.Append("\"currency\": \"");
-                    sb.Append(product.Currency);
-                    sb.Append("\"}, ");
-                }
-
-                if (order.GetProductsCount() > 0)
-                {
-                    sb.Remove(sb.Length - 2, 2);
-                }
+                PrintProducts(order, sb);
 
                 sb.Append("]");
                 sb.Append("}, ");
@@ -67,6 +38,38 @@ namespace RefactoringKata
             return sb.Append("]}").ToString();
         }
 
+        private void PrintProducts(Order order, StringBuilder sb)
+        {
+            for (var j = 0; j < order.GetProductsCount(); j++)
+            {
+                var product = order.GetProduct(j);
+                sb.Append("{");
+                sb.Append("\"code\": \"");
+                sb.Append(product.Code);
+                sb.Append("\", ");
+                sb.Append("\"color\": \"");
+                sb.Append(getColorFor(product));
+                sb.Append("\", ");
+                if (product.Size != Product.SIZE_NOT_APPLICABLE)
+                {
+                    sb.Append("\"size\": \"");
+                    sb.Append(getSizeFor(product));
+                    sb.Append("\", ");
+                }
+
+                sb.Append("\"price\": ");
+                sb.Append(product.Price);
+                sb.Append(", ");
+                sb.Append("\"currency\": \"");
+                sb.Append(product.Currency);
+                sb.Append("\"}, ");
+
+                if (order.GetProductsCount() > 0)
+                {
+                    sb.Remove(sb.Length - 2, 2);
+                }
+            }
+        }
 
         private string getSizeFor(Product product)
         {
