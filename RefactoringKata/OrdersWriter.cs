@@ -58,11 +58,7 @@ namespace RefactoringKata
 
                 sb.Append("{");
                 sb.Append(PrintEachProductSpecification(productSpecifications));
-                sb.Append("}, ");
-                if (order.GetProductsCount() > 0)
-                {
-                    sb.Remove(sb.Length - 2, 2);
-                }
+                sb.Append("}");
             }
         }
 
