@@ -25,7 +25,7 @@ namespace RefactoringKata
                 sb.Append(order.GetOrderId());
                 sb.Append(", ");
                 sb.Append("\"products\": [");
-                PrintProducts(order, sb);
+                sb.Append(PrintProducts(order));
                 sb.Append("]");
                 sb.Append("}, ");
             }
@@ -38,8 +38,9 @@ namespace RefactoringKata
             return sb.Append("]}").ToString();
         }
 
-        private void PrintProducts(Order order, StringBuilder sb)
+        private string PrintProducts(Order order)
         {
+            var productsDetail = string.Empty;
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
@@ -56,10 +57,11 @@ namespace RefactoringKata
                     productSpecifications.Remove("size");
                 }
 
-                sb.Append("{");
-                sb.Append(PrintEachProductSpecification(productSpecifications));
-                sb.Append("}");
+                productsDetail += "{";
+                productsDetail += PrintEachProductSpecification(productSpecifications);
+                productsDetail += "}";
             }
+            return productsDetail;
         }
 
         private string PrintEachProductSpecification(Dictionary<string, object> productSpecifications)
