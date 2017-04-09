@@ -55,18 +55,13 @@ namespace RefactoringKata
                 };
 
                 sb.Append("{");
-                sb.Append("\"" + productSpecifications.ElementAt(0).Key + "\": \"" + productSpecifications.ElementAt(0).Value);
-                sb.Append("\", ");
-                sb.Append("\"" + productSpecifications.ElementAt(1).Key + "\": \"" + productSpecifications.ElementAt(1).Value);
-                sb.Append("\", ");
+                sb.Append("\"" + productSpecifications.ElementAt(0).Key + "\": \"" + productSpecifications.ElementAt(0).Value + "\", ");
+                sb.Append("\"" + productSpecifications.ElementAt(1).Key + "\": \"" + productSpecifications.ElementAt(1).Value + "\", ");
                 if (product.Size != Product.SIZE_NOT_APPLICABLE)
                 {
-                    sb.Append("\"" + productSpecifications.ElementAt(2).Key + "\": \"" + productSpecifications.ElementAt(2).Value);
-                    sb.Append("\", ");
+                    sb.Append("\"" + productSpecifications.ElementAt(2).Key + "\": \"" + productSpecifications.ElementAt(2).Value + "\", ");
                 }
-
-                sb.Append("\"" + productSpecifications.ElementAt(3).Key + "\": " + productSpecifications.ElementAt(3).Value);
-                sb.Append(", ");
+                sb.Append("\"" + productSpecifications.ElementAt(3).Key + "\": " + productSpecifications.ElementAt(3).Value + ", ");
                 sb.Append("\"" + productSpecifications.ElementAt(4).Key + "\": \"" + productSpecifications.ElementAt(4).Value);
                 sb.Append("\"}, ");
 
