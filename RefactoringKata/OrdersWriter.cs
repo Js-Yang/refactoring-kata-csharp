@@ -44,29 +44,15 @@ namespace RefactoringKata
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
-                var productSpecifications = new Dictionary<string, object>()
-                {
-                    {"code",product.Code},
-                    {"color",getColorFor(product)},
-                    {"size",getSizeFor(product)},
-                    {"price",product.Price},
-                    {"currency",product.Currency}
-                };
-                if (product.Size == Product.SIZE_NOT_APPLICABLE)
-                {
-                    productSpecifications.Remove("size");
-                }
-
-                productsDetail += "{";
+                var productSpecifications = product.GetSpecifications();
                 productsDetail += PrintEachProductSpecification(productSpecifications);
-                productsDetail += "}";
             }
             return productsDetail;
         }
 
         private string PrintEachProductSpecification(Dictionary<string, object> productSpecifications)
         {
-            var specifications = string.Empty;
+            var specifications = "{";
             var lastKey = productSpecifications.Last().Key;
             foreach (var productSpecification in productSpecifications)
             {
@@ -77,6 +63,7 @@ namespace RefactoringKata
                     specifications += ", ";
                 }
             }
+            specifications += "}";
             return specifications;
         }
 
@@ -93,40 +80,5 @@ namespace RefactoringKata
             return specificationValue is double;
         }
 
-        private string getSizeFor(Product product)
-        {
-            switch (product.Size)
-            {
-                case 1:
-                    return "XS";
-                case 2:
-                    return "S";
-                case 3:
-                    return "M";
-                case 4:
-                    return "L";
-                case 5:
-                    return "XL";
-                case 6:
-                    return "XXL";
-                default:
-                    return "Invalid Size";
-            }
-        }
-
-        private string getColorFor(Product product)
-        {
-            switch (product.Color)
-            {
-                case 1:
-                    return "blue";
-                case 2:
-                    return "red";
-                case 3:
-                    return "yellow";
-                default:
-                    return "no color";
-            }
-        }
     }
 }
