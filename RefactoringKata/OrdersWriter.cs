@@ -17,6 +17,13 @@ namespace RefactoringKata
         {
             var sb = new StringBuilder("{\"orders\": [");
 
+            printOrder(sb);
+
+            return sb.Append("]}").ToString();
+        }
+
+        private void printOrder(StringBuilder sb)
+        {
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
@@ -34,8 +41,6 @@ namespace RefactoringKata
             {
                 sb.Remove(sb.Length - 2, 2);
             }
-
-            return sb.Append("]}").ToString();
         }
 
         private string PrintProducts(Order order)
