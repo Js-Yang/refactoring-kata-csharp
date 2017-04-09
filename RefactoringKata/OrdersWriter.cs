@@ -53,18 +53,22 @@ namespace RefactoringKata
                     {"price",product.Price},
                     {"currency",product.Currency}
                 };
-
-                sb.Append("{");
-                sb.Append("\"" + productSpecifications.ElementAt(0).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(0).Value) + ", ");
-                sb.Append("\"" + productSpecifications.ElementAt(1).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(1).Value) + ", ");
-                if (product.Size != Product.SIZE_NOT_APPLICABLE)
+                if (product.Size == Product.SIZE_NOT_APPLICABLE)
                 {
-                    sb.Append("\"" + productSpecifications.ElementAt(2).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(2).Value) + ", ");
+                    productSpecifications.Remove("size");
                 }
-                sb.Append("\"" + productSpecifications.ElementAt(3).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(3).Value) + ", ");
-                sb.Append("\"" + productSpecifications.ElementAt(4).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(4).Value) + "");
-                sb.Append("}, ");
 
+                var lastKey = productSpecifications.Last().Key;
+                sb.Append("{");
+                foreach (var productSpecification in productSpecifications)
+                {
+                    sb.Append(string.Format("\"{0}\": {1}", productSpecification.Key, PrintSpecificationValue(productSpecification.Value)));
+                    if (productSpecification.Key != lastKey)
+                    {
+                        sb.Append(", ");
+                    }
+                }
+                sb.Append("}, ");
                 if (order.GetProductsCount() > 0)
                 {
                     sb.Remove(sb.Length - 2, 2);
