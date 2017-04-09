@@ -45,7 +45,7 @@ namespace RefactoringKata
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
-                Dictionary<string, object> productSpecifications = new Dictionary<string, object>()
+                var productSpecifications = new Dictionary<string, object>()
                 {
                     {"code",product.Code},
                     {"color",getColorFor(product)},
@@ -55,21 +55,34 @@ namespace RefactoringKata
                 };
 
                 sb.Append("{");
-                sb.Append("\"" + productSpecifications.ElementAt(0).Key + "\": \"" + productSpecifications.ElementAt(0).Value + "\", ");
-                sb.Append("\"" + productSpecifications.ElementAt(1).Key + "\": \"" + productSpecifications.ElementAt(1).Value + "\", ");
+                sb.Append("\"" + productSpecifications.ElementAt(0).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(0).Value) + ", ");
+                sb.Append("\"" + productSpecifications.ElementAt(1).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(1).Value) + ", ");
                 if (product.Size != Product.SIZE_NOT_APPLICABLE)
                 {
-                    sb.Append("\"" + productSpecifications.ElementAt(2).Key + "\": \"" + productSpecifications.ElementAt(2).Value + "\", ");
+                    sb.Append("\"" + productSpecifications.ElementAt(2).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(2).Value) + ", ");
                 }
-                sb.Append("\"" + productSpecifications.ElementAt(3).Key + "\": " + productSpecifications.ElementAt(3).Value + ", ");
-                sb.Append("\"" + productSpecifications.ElementAt(4).Key + "\": \"" + productSpecifications.ElementAt(4).Value);
-                sb.Append("\"}, ");
+                sb.Append("\"" + productSpecifications.ElementAt(3).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(3).Value) + ", ");
+                sb.Append("\"" + productSpecifications.ElementAt(4).Key + "\": " + PrintSpecificationValue(productSpecifications.ElementAt(4).Value) + "");
+                sb.Append("}, ");
 
                 if (order.GetProductsCount() > 0)
                 {
                     sb.Remove(sb.Length - 2, 2);
                 }
             }
+        }
+
+        private string PrintSpecificationValue(object specificationValue)
+        {
+            string value = specificationValue.ToString();
+            if (!IsNumber(specificationValue))
+                value = "\"" + value + "\"";
+            return value;
+        }
+
+        private static bool IsNumber(object specificationValue)
+        {
+            return specificationValue is double;
         }
 
         private string getSizeFor(Product product)
